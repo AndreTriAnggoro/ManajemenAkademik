@@ -34,4 +34,16 @@ class Kelas extends Model
     {
         return $this->hasMany(GuruKelasMapel::class, 'kelas_id');
     }
+
+    public function gurus()
+    {
+        return $this->belongsToMany(Guru::class, 'guru_kelas_mapels')
+            ->withPivot('mata_pelajaran_id');
+    }
+
+    public function mataPelajarans()
+    {
+        return $this->belongsToMany(MataPelajaran::class, 'guru_kelas_mapels')
+            ->withPivot('guru_id');
+    }
 }

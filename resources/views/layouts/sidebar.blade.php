@@ -47,18 +47,22 @@
                         <p>Guru Mata Pelajaran</p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('filter') ? 'active' : '' }}">
-                    <a href="{{ route('filter') }}">
+                <li class="nav-item {{ request()->routeIs('siswaguru.kelas') ? 'active' : '' }}">
+                    <a href="{{ route('siswaguru.kelas') }}">
                         <i class="fas fa-filter"></i>
-                        <p>Filter Siswa dan Guru</p>
+                        <p>Data By Kelas</p>
                     </a>
                 </li>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-link text-danger">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                </form>
+                <li class="nav-item mt-3">
+                    <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-block d-flex align-items-center justify-content-center" style="width: 100%; text-align: left; border-radius: 5px;">
+                            <i class="fas fa-sign-out-alt me-2 mr-3"></i> 
+                            <span>Logout</span>
+                        </button>
+                    </form>
+                </li>
+                
             </ul>
         </div>
     </div>

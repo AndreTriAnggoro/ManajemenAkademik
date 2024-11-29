@@ -63,31 +63,28 @@ class KelasController extends Controller
         return response()->json(['success' => 'Kelas berhasil dihapus!']);
     }
 
-    public function dashboard()
+    public function listKelasDenganSiswa()
     {
-        $kelas = Kelas::all(); // Mendapatkan semua kelas
-        return view('index', compact('kelas'));
+        $kelas = Kelas::with('siswas')->get();
+        return view('siswabykelas.index', compact('kelas'));
     }
 
-    public function filter(Request $request)
+    public function listKelasDenganGuru()
     {
-        $kelasId = $request->input('kelas_id');
-        $guruId = $request->input('guru_id');
+        $kelas = Kelas::with(['gurus' => function ($query) {
+            $query->with(['mataPelajarans'])->distinct();
+        }])->get();
+        return view('gurubykelas.index', compact('kelas'));
+    }
 
-        // Filter data
-        $siswaList = Siswa::where('kelas_id', $kelasId)->get();
-        $guruList = Guru::whereHas('kelasMapels', function ($query) use ($kelasId) {
-            $query->where('kelas_id', $kelasId);
-        })->get();
+    public function listKelasDenganSiswaDanGuru(Request $request)
+    {
+        $viewType = $request->input('viewType', 'siswa');
 
-        $siswaKelasGuru = GuruKelasMapel::with('guru', 'kelas', 'mataPelajaran')
-            ->where('kelas_id', $kelasId)
-            ->when($guruId, function ($query) use ($guruId) {
-                $query->where('guru_id', $guruId);
-            })->get();
+        $kelas = Kelas::with(['siswas', 'gurus' => function ($query) {
+            $query->with(['mataPelajarans'])->distinct();
+        }])->get();
 
-        $kelas = Kelas::all();
-
-        return view('index', compact('kelas', 'siswaList', 'guruList', 'siswaKelasGuru', 'kelasId', 'guruId'));
+        return view('siswagurubykelas.index', compact('kelas', 'viewType'));
     }
 }

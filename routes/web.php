@@ -31,6 +31,12 @@ Route::get('/guru/{id}/edit', [GuruController::class, 'edit'])->name('guru.edit'
 Route::put('/guru/{id}', [GuruController::class, 'update'])->name('guru.update');
 Route::delete('/guru/{id}', [GuruController::class, 'destroy'])->name('guru.destroy');
 
+Route::get('/siswa-by-kelas', [KelasController::class, 'listKelasDenganSiswa'])->name('siswa.kelas');
+Route::get('/guru-by-kelas', [KelasController::class, 'listKelasDenganGuru'])->name('guru.kelas');
+Route::get('/siswa-guru-by-kelas', [KelasController::class, 'listKelasDenganSiswaDanGuru'])->name('siswaguru.kelas');
+Route::get('/kelas-data', [KelasController::class, 'listKelasDenganSiswaDanGuru'])->name('listKelasDenganSiswaDanGuru');
+
+
 Route::get('/guru_kelas_mapel', [GuruKelasMapelController::class, 'index'])->name('guru_kelas_mapel.index');
 Route::post('/guru_kelas_mapel', [GuruKelasMapelController::class, 'store'])->name('guru_kelas_mapel.store');
 Route::get('/guru_kelas_mapel/{id}/edit', [GuruKelasMapelController::class, 'edit'])->name('guru_kelas_mapel.edit');
@@ -42,8 +48,6 @@ Route::post('/pelajaran', [MataPelajaranController::class, 'store'])->name('pela
 Route::delete('/pelajaran/{id}', [MataPelajaranController::class, 'destroy'])->name('pelajaran.destroy');
 
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
-Route::get('/dashboard', [KelasController::class, 'dashboard'])->name('filter');
-Route::post('/kelas/filter', [KelasController::class, 'filter'])->name('kelas.filter');
 
 // Route::get('/dashboard2', function () {
 //     return view('dashboard');

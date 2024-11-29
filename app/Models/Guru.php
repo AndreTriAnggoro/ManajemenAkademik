@@ -26,12 +26,19 @@ class Guru extends Model
             ->withTimestamps();
     }
 
-    public function kelas()
-    {
-        return $this->hasOne(Kelas::class, 'id', 'kelas_id');
-    }
     public function kelasMapels()
     {
         return $this->hasMany(GuruKelasMapel::class, 'guru_id');
+    }
+    public function kelas()
+    {
+        return $this->belongsToMany(Kelas::class, 'guru_kelas_mapels')
+            ->withPivot('mata_pelajaran_id');
+    }
+
+    public function mataPelajarans()
+    {
+        return $this->belongsToMany(MataPelajaran::class, 'guru_kelas_mapels')
+            ->withPivot('kelas_id');
     }
 }

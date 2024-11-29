@@ -16,4 +16,9 @@ class MataPelajaran extends Model
     {
         return $this->hasMany(GuruKelasMapel::class, 'mata_pelajaran_id');
     }
+
+    public function gurus()
+    {
+        return $this->belongsToMany(Guru::class, 'guru_kelas_mapels', 'mata_pelajaran_id', 'guru_id');
+    }
 }
